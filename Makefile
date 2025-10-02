@@ -1,5 +1,6 @@
 # PostureTracker Makefile
 # 自动化构建、测试和部署任务
+# 最后更新: 2024-09-30 - Sprint 1 完成
 
 # 配置变量
 PROJECT_NAME = PostureTracker
@@ -20,6 +21,7 @@ NC = \033[0m # No Color
 .PHONY: help
 help: ## 显示帮助信息
 	@echo "$(GREEN)PostureTracker 构建系统$(NC)"
+	@echo "$(YELLOW)当前状态: Sprint 1 完成 ✅$(NC)"
 	@echo "使用方法: make [目标]"
 	@echo ""
 	@echo "可用目标:"
@@ -196,6 +198,60 @@ firebase-deploy: ## 部署到 Firebase
 	@echo "$(GREEN)正在部署到 Firebase...$(NC)"
 	@firebase deploy --only hosting
 	@echo "$(GREEN)Firebase 部署完成！$(NC)"
+
+.PHONY: docs-open
+docs-open: ## 打开项目文档
+	@echo "$(GREEN)打开项目文档...$(NC)"
+	@open NEXT_STEPS.md || xdg-open NEXT_STEPS.md
+	@open PROJECT_STATUS.md || xdg-open PROJECT_STATUS.md
+	@open Docs/SPRINT_TRACKER.md || xdg-open Docs/SPRINT_TRACKER.md
+
+.PHONY: docs-next
+docs-next: ## 查看下一步行动指南
+	@echo "$(GREEN)打开下一步行动指南...$(NC)"
+	@open NEXT_STEPS.md || xdg-open NEXT_STEPS.md
+
+.PHONY: docs-status
+docs-status: ## 查看项目状态
+	@echo "$(GREEN)项目状态概览$(NC)"
+	@cat PROJECT_STATUS.md
+
+.PHONY: docs-sprint
+docs-sprint: ## 查看 Sprint 进度
+	@echo "$(GREEN)打开 Sprint 进度跟踪...$(NC)"
+	@open Docs/SPRINT_TRACKER.md || xdg-open Docs/SPRINT_TRACKER.md
+
+.PHONY: sprint-status
+sprint-status: ## 显示当前 Sprint 状态
+	@echo "$(GREEN)======================================$(NC)"
+	@echo "$(GREEN)PostureTracker Sprint 状态$(NC)"
+	@echo "$(GREEN)======================================$(NC)"
+	@echo ""
+	@echo "$(YELLOW)当前阶段:$(NC) 第二阶段 - 视图层开发"
+	@echo "$(YELLOW)当前 Sprint:$(NC) Sprint 1 ✅ 已完成"
+	@echo "$(YELLOW)完成进度:$(NC) 33% (1/3 Sprint)"
+	@echo "$(YELLOW)下一 Sprint:$(NC) Sprint 2 - 数据可视化界面"
+	@echo ""
+	@echo "$(GREEN)Sprint 1 成果:$(NC)"
+	@echo "  ✅ 8 个视图文件"
+	@echo "  ✅ 3 个可复用组件"
+	@echo "  ✅ 1,830 行代码"
+	@echo "  ✅ 22 个 Preview"
+	@echo "  ✅ 完整文档体系"
+	@echo ""
+	@echo "$(GREEN)下一步:$(NC) 查看 NEXT_STEPS.md 获取详细计划"
+	@echo "$(GREEN)======================================$(NC)"
+
+.PHONY: quick-start
+quick-start: ## 快速开始（打开关键文档）
+	@echo "$(GREEN)欢迎使用 PostureTracker！$(NC)"
+	@echo ""
+	@echo "$(YELLOW)正在打开关键文档...$(NC)"
+	@open NEXT_STEPS.md || xdg-open NEXT_STEPS.md
+	@sleep 1
+	@open PROJECT_STATUS.md || xdg-open PROJECT_STATUS.md
+	@echo ""
+	@echo "$(GREEN)提示:$(NC) 建议先阅读 NEXT_STEPS.md"
 
 # 默认目标
 .DEFAULT_GOAL := help

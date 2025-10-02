@@ -1,0 +1,61 @@
+# SwiftLint 配置文件
+disabled_rules:
+  - trailing_whitespace
+  - line_length
+  - force_cast
+
+opt_in_rules:
+  - empty_count
+  - closure_spacing
+  - contains_over_first_not_nil
+  - discouraged_optional_boolean
+  - fallthrough
+  - first_where
+  - joined_default_parameter
+  - overridden_super_call
+  - redundant_nil_coalescing
+  - sorted_first_last
+  - trailing_semicolon
+  - unneeded_break_in_switch
+  - unused_closure_parameter
+
+excluded:
+  - Pods
+  - .build
+  - DerivedData
+  - PostureTrackerTests
+
+line_length:
+  warning: 120
+  error: 200
+
+file_length:
+  warning: 500
+  error: 1000
+
+type_body_length:
+  warning: 300
+  error: 500
+
+function_body_length:
+  warning: 50
+  error: 100
+
+cyclomatic_complexity:
+  warning: 10
+  error: 20
+
+identifier_name:
+  min_length:
+    warning: 2
+  max_length:
+    warning: 40
+    error: 50
+  excluded:
+    - id
+    - x
+    - y
+    - z
+    - w
+
+reporter: "xcode"
