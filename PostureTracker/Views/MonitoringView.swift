@@ -97,6 +97,18 @@ struct MonitoringView: View {
                 .foregroundColor(.secondary)
 
             if motionManager.isTracking {
+                // 3D 姿态可视化
+                PostureVisualization3D(
+                    pitch: motionManager.currentPosture.pitch,
+                    yaw: motionManager.currentPosture.yaw,
+                    roll: motionManager.currentPosture.roll,
+                    showAxes: true,
+                    headColor: deviationColor
+                )
+                .frame(height: 200)
+                .cornerRadius(12)
+                .background(Color(.systemGray6))
+
                 // 姿态角度显示
                 HStack(spacing: 32) {
                     postureAngleView(
@@ -185,6 +197,22 @@ struct MonitoringView: View {
                 .opacity(0.1)
         )
         .cornerRadius(8)
+    }
+    
+    /// 根据偏差计算头部颜色
+    private var deviationColor: UIColor {
+        let deviation = motionManager.currentPosture.deviation(from: motionManager.targetPosture)
+        let magnitude = deviation.magnitude
+        
+        if magnitude <= 5.0 {
+            return .systemGreen // 姿态很好
+        } else if magnitude <= 15.0 {
+            return .systemBlue // 姿态正常
+        } else if magnitude <= 25.0 {
+            return .systemOrange // 有偏差
+        } else {
+            return .systemRed // 偏差很大
+        }
     }
 
     /// 控制按钮

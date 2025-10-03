@@ -1,354 +1,236 @@
 # PostureTracker 下一步行动指南
 
-## 🎉 Sprint 1 完成！
+## 🎉 Sprint 2 完成！
 
-恭喜！您已经成功完成了 **Sprint 1: 核心界面框架开发**。
+恭喜！您已经成功完成了 **Sprint 2: 数据可视化界面开发**。
 
-**当前进度**: 第二阶段 33% 完成 (1/3 Sprint)
+**当前进度**: 第二阶段 67% 完成 (2/3 Sprint)
 
 ---
 
 ## 📋 立即行动清单
 
-### 第一步：创建 Xcode 项目（如果尚未创建）
+### 第一步：在 Xcode 中测试 Sprint 2 成果
 
 ```bash
-# 1. 在 Xcode 中创建新项目
-# File > New > Project...
-# iOS > App
-# Product Name: PostureTracker
-# Interface: SwiftUI
-# Language: Swift
+# 1. 在 Xcode 中打开项目
+# 双击 PostureTracker.xcworkspace 或 PostureTracker.xcodeproj
 
-# 2. 将现有代码添加到项目
-# - 删除自动生成的 ContentView.swift 和 PostureTrackerApp.swift
-# - 右键项目 > Add Files to "PostureTracker"...
-# - 选择 PostureTracker 文件夹下的所有子目录
-# - 勾选 "Copy items if needed" 和 "Create groups"
-
-# 3. 配置 Info.plist
-# 添加运动数据使用说明：
-# NSMotionUsageDescription: "需要访问运动数据来监测头部姿态"
-
-# 4. 测试编译
+# 2. 编译项目
 # Cmd + B (Build)
+
+# 3. 运行应用
 # Cmd + R (Run)
-```
 
-### 第二步：验证 Sprint 1 功能
-
-```bash
-# 在模拟器中测试
-✅ 应用能正常启动
-✅ 三个标签页可以切换
-✅ 监测页面显示正常
-✅ 按钮可以点击（连接状态会显示错误，这是正常的）
-✅ 统计和设置页面显示占位内容
+# 4. 测试新功能
+✅ 查看统计页面的折线图和柱状图
+✅ 在监测页面查看 3D 姿态可视化（模拟器中）
+✅ 切换时间范围（今天/本周/本月）
+✅ 查看会话摘要列表
 ✅ 切换到暗色模式查看效果
 ```
 
-### 第三步：准备 Sprint 2 开发环境
+### 第二步：验证 Sprint 2 功能
 
 ```bash
-# 1. 学习 SceneKit 基础
-# - Apple 官方文档：SceneKit Overview
-# - WWDC Session：Building Apps with SceneKit
-# - 示例项目：Apple Sample Code
+# 在模拟器中测试
+✅ 统计页面显示图表正常
+✅ 监测页面显示 3D 头部模型
+✅ 角度数据和 3D 模型同步（使用模拟数据）
+✅ 所有 Preview 能正常工作
+```
 
-# 2. 学习 Swift Charts
-# - Apple 官方文档：Swift Charts
-# - WWDC Session：Hello Swift Charts
-# - 示例项目：Charts Tutorials
+### 第三步：准备 Sprint 3 开发环境
 
-# 3. 准备测试数据
-# - 创建模拟姿态数据生成器
-# - 准备不同时间段的测试数据
+```bash
+# 1. 查看当前设置页面
+# - 所有设置项目前都是占位状态
+# - 需要实现实际功能
+
+# 2. 学习 UserDefaults 数据存储
+# - Apple 官方文档：UserDefaults
+# - SwiftUI @AppStorage 属性包装器
+
+# 3. 准备音频测试环境
+# - AVFoundation 基础知识
+# - AVSpeechSynthesizer 使用
 ```
 
 ---
 
-## 🚀 Sprint 2 详细开发计划
+## 🚀 Sprint 3 详细开发计划
 
-### 目标：数据可视化界面（预计 4-5 天）
+### 目标：设置和配置界面（预计 3-4 天）
 
-### Task 2.2.1: 3D 姿态展示组件（2-3 天）
+### Task 3.1: 设置页面功能实现（2-3 天）
 
 **优先级**: ⭐⭐⭐ 最高
 
-#### 步骤 1: 集成 SceneKit（2-3 小时）
+#### 步骤 1: 监测参数配置（2-3 小时）
 
 ```swift
-// 创建文件：PostureTracker/Views/Components/PostureVisualization3D.swift
+// 在 SettingsView.swift 中替换监测设置占位内容
 
-import SwiftUI
-import SceneKit
+Section("监测设置") {
+    // 采样率选择器
+    Picker("采样率", selection: $sampleRate) {
+        Text("25 Hz").tag(25.0)
+        Text("50 Hz").tag(50.0)
+        Text("100 Hz").tag(100.0)
+    }
+    .pickerStyle(.segmented)
 
-struct PostureVisualization3D: UIViewRepresentable {
-    var pitch: Double
-    var yaw: Double
-    var roll: Double
-
-    func makeUIView(context: Context) -> SCNView {
-        // 创建 SceneKit 视图
-        let sceneView = SCNView()
-        sceneView.scene = SCNScene()
-        sceneView.backgroundColor = .clear
-        sceneView.allowsCameraControl = false
-
-        // TODO: 设置相机和光照
-        // TODO: 添加头部模型
-
-        return sceneView
+    // 灵敏度调节
+    VStack(alignment: .leading) {
+        Text("灵敏度: \(Int(sensitivity))°")
+        Slider(value: $sensitivity, in: 5...30, step: 1)
     }
 
-    func updateUIView(_ uiView: SCNView, context: Context) {
-        // TODO: 更新模型旋转角度
+    // 提示延迟
+    VStack(alignment: .leading) {
+        Text("提示延迟: \(Int(alertDelay))秒")
+        Slider(value: $alertDelay, in: 1...10, step: 1)
     }
 }
 ```
 
 **验收标准**:
-- [ ] SceneKit 场景能正常渲染
-- [ ] 场景中有基础几何体（立方体或球体代表头部）
-- [ ] 背景透明，融入应用风格
 
-#### 步骤 2: 实现头部模型（3-4 小时）
+- [ ] 设置能正常保存到 UserDefaults
+- [ ] 重启应用后设置保持
+- [ ] 滑块和选择器交互正常
 
-```swift
-// 在 makeUIView 中添加模型
-private func setupHeadModel(in scene: SCNScene) {
-    // 创建简单的头部模型（椭球体）
-    let headGeometry = SCNSphere(radius: 1.0)
-    headGeometry.segmentCount = 32
-
-    // 设置材质
-    headGeometry.firstMaterial?.diffuse.contents = UIColor.systemBlue
-    headGeometry.firstMaterial?.specular.contents = UIColor.white
-
-    // 创建节点
-    let headNode = SCNNode(geometry: headGeometry)
-    scene.rootNode.addChildNode(headNode)
-
-    // TODO: 添加参考坐标系（可选）
-}
-```
-
-**验收标准**:
-- [ ] 头部模型渲染正常
-- [ ] 材质和光照效果良好
-- [ ] 大小和位置合适
-
-#### 步骤 3: 实时旋转更新（2-3 小时）
+#### 步骤 2: 音频反馈配置（2-3 小时）
 
 ```swift
-func updateUIView(_ uiView: SCNView, context: Context) {
-    guard let headNode = uiView.scene?.rootNode.childNodes.first else { return }
+Section("音频反馈") {
+    // 音量调节
+    VStack(alignment: .leading) {
+        Text("提示音音量: \(Int(alertVolume * 100))%")
+        Slider(value: $alertVolume, in: 0...1, step: 0.1)
+    }
 
-    // 将欧拉角转换为 SceneKit 旋转
-    let pitchRotation = SCNMatrix4MakeRotation(Float(pitch.degreesToRadians), 1, 0, 0)
-    let yawRotation = SCNMatrix4MakeRotation(Float(yaw.degreesToRadians), 0, 1, 0)
-    let rollRotation = SCNMatrix4MakeRotation(Float(roll.degreesToRadians), 0, 0, 1)
+    // 语音开关
+    Toggle("语音提示", isOn: $speechEnabled)
 
-    // 组合旋转
-    var transform = SCNMatrix4Identity
-    transform = SCNMatrix4Mult(transform, yawRotation)
-    transform = SCNMatrix4Mult(transform, pitchRotation)
-    transform = SCNMatrix4Mult(transform, rollRotation)
+    if speechEnabled {
+        // 语音选择
+        Picker("语音类型", selection: $selectedVoice) {
+            Text("男声").tag("male")
+            Text("女声").tag("female")
+        }
+        .pickerStyle(.segmented)
 
-    headNode.transform = transform
-}
-```
+        // 语音预览
+        Button("试听语音") {
+            previewVoice()
+        }
+    }
 
-**验收标准**:
-- [ ] 模型能根据角度实时旋转
-- [ ] 旋转方向正确
-- [ ] 性能流畅（60fps）
+    // 勿扰模式
+    Toggle("勿扰模式", isOn: $doNotDisturbEnabled)
 
-#### 步骤 4: 集成到监测页面（1-2 小时）
-
-```swift
-// 在 MonitoringView.swift 的 currentPostureCard 中添加
-if motionManager.isTracking {
-    // 3D 可视化
-    PostureVisualization3D(
-        pitch: motionManager.currentPosture.pitch,
-        yaw: motionManager.currentPosture.yaw,
-        roll: motionManager.currentPosture.roll
-    )
-    .frame(height: 200)
-    .cornerRadius(12)
-
-    // 原有的角度显示
-    HStack(spacing: 32) {
-        // ...
+    if doNotDisturbEnabled {
+        DatePicker("开始时间", selection: $dndStartTime, displayedComponents: .hourAndMinute)
+        DatePicker("结束时间", selection: $dndEndTime, displayedComponents: .hourAndMinute)
     }
 }
 ```
 
 **验收标准**:
-- [ ] 3D 视图集成到页面
-- [ ] 与其他元素布局协调
-- [ ] 交互不冲突
+
+- [ ] 语音预览功能工作
+- [ ] 勿扰模式时间设置正常
+- [ ] 音量调节立即生效
+
+#### 步骤 3: 数据和隐私设置（1-2 小时）
+
+```swift
+Section("数据和隐私") {
+    // 数据导出
+    Button("导出训练数据") {
+        exportTrainingData()
+    }
+
+    // 数据清理
+    Button("清除所有数据", role: .destructive) {
+        showingClearDataAlert = true
+    }
+    .confirmationDialog("确认清除", isPresented: $showingClearDataAlert) {
+        Button("清除所有数据", role: .destructive) {
+            clearAllData()
+        }
+    }
+
+    // 隐私说明
+    NavigationLink("隐私政策") {
+        PrivacyPolicyView()
+    }
+}
+```
+
+**验收标准**:
+
+- [ ] 数据导出功能准备就绪
+- [ ] 清除数据确认正常
+- [ ] 隐私政策页面可访问
 
 ---
 
-### Task 2.2.2: 统计图表页面（1-2 天）
-
-**优先级**: ⭐⭐⭐ 高
-
-#### 步骤 1: 准备测试数据（1-2 小时）
-
-```swift
-// 创建文件：PostureTracker/Utils/MockDataGenerator.swift
-
-struct MockDataGenerator {
-    /// 生成今日姿态趋势数据
-    static func generateTodayPostureData() -> [PostureDataPoint] {
-        var data: [PostureDataPoint] = []
-        let now = Date()
-
-        for hour in 0..<24 {
-            let date = Calendar.current.date(byAdding: .hour, value: -hour, to: now)!
-            let avgPitch = Double.random(in: -15...15)
-            data.append(PostureDataPoint(date: date, avgPitch: avgPitch))
-        }
-
-        return data.reversed()
-    }
-
-    /// 生成每日训练时长数据
-    static func generateWeeklyDuration() -> [DurationDataPoint] {
-        // TODO: 实现
-    }
-}
-
-struct PostureDataPoint: Identifiable {
-    let id = UUID()
-    let date: Date
-    let avgPitch: Double
-}
-```
-
-**验收标准**:
-- [ ] 能生成合理的测试数据
-- [ ] 数据格式符合图表要求
-
-#### 步骤 2: 实现折线图（2-3 小时）
-
-```swift
-// 在 StatisticsView.swift 中替换占位内容
-import Charts
-
-private var postureChart: some View {
-    VStack(alignment: .leading, spacing: 12) {
-        Text("姿态趋势")
-            .font(.headline)
-
-        Chart(mockData) { dataPoint in
-            LineMark(
-                x: .value("时间", dataPoint.date),
-                y: .value("俯仰角", dataPoint.avgPitch)
-            )
-            .foregroundStyle(.blue)
-            .interpolationMethod(.catmullRom)
-        }
-        .frame(height: 200)
-        .chartYAxis {
-            AxisMarks(position: .leading)
-        }
-        .chartXAxis {
-            AxisMarks(values: .stride(by: .hour, count: 3))
-        }
-    }
-    .padding()
-    .background(Color(.systemBackground))
-    .cornerRadius(16)
-}
-```
-
-**验收标准**:
-- [ ] 折线图正常显示
-- [ ] 坐标轴标签清晰
-- [ ] 支持暗色模式
-
-#### 步骤 3: 实现柱状图（2-3 小时）
-
-```swift
-private var durationChart: some View {
-    VStack(alignment: .leading, spacing: 12) {
-        Text("每日训练时长")
-            .font(.headline)
-
-        Chart(weeklyData) { dataPoint in
-            BarMark(
-                x: .value("日期", dataPoint.date, unit: .day),
-                y: .value("时长", dataPoint.duration)
-            )
-            .foregroundStyle(.green)
-        }
-        .frame(height: 200)
-    }
-    .padding()
-    .background(Color(.systemBackground))
-    .cornerRadius(16)
-}
-```
-
-**验收标准**:
-- [ ] 柱状图正常显示
-- [ ] 数据标签清晰
-- [ ] 交互体验良好
-
----
-
-### Task 2.2.3: 会话统计卡片（1 天）
+### Task 3.2: 权限管理界面（1-2 天）
 
 **优先级**: ⭐⭐ 中等
 
-#### 创建独立组件（3-4 小时）
+#### 创建 PermissionsView 组件（4-5 小时）
 
 ```swift
-// 创建文件：PostureTracker/Views/Components/SessionSummaryCard.swift
+// 创建文件：PostureTracker/Views/PermissionsView.swift
 
-struct SessionSummaryCard: View {
-    let sessionData: SessionStatistics
+struct PermissionsView: View {
+    @State private var motionAuthStatus: CMAuthorizationStatus = .notDetermined
+    @State private var microphoneAuthStatus: AVAudioSession.RecordPermission = .undetermined
 
     var body: some View {
-        VStack(spacing: 16) {
-            // 标题
-            HStack {
-                Text("会话总结")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                Spacer()
-                Button(action: shareSession) {
-                    Image(systemName: "square.and.arrow.up")
-                }
+        List {
+            Section("所需权限") {
+                PermissionRow(
+                    icon: "gyroscope",
+                    title: "运动传感器",
+                    description: "监测 AirPods 头部运动",
+                    status: motionAuthStatus
+                )
+
+                PermissionRow(
+                    icon: "mic",
+                    title: "麦克风",
+                    description: "音频反馈功能",
+                    status: microphoneAuthStatus
+                )
             }
 
-            // 统计数据网格
-            LazyVGrid(columns: [
-                GridItem(.flexible()),
-                GridItem(.flexible())
-            ], spacing: 16) {
-                statItem(icon: "clock", label: "总时长", value: formatDuration(sessionData.duration))
-                statItem(icon: "figure.stand", label: "姿态评分", value: "\(sessionData.score)")
-                statItem(icon: "exclamationmark.triangle", label: "偏差次数", value: "\(sessionData.deviationCount)")
-                statItem(icon: "chart.line.uptrend.xyaxis", label: "改善率", value: "\(sessionData.improvement)%")
+            Section("操作") {
+                Button("重新检查权限") {
+                    checkPermissions()
+                }
+
+                Button("打开系统设置") {
+                    openSystemSettings()
+                }
             }
         }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 8)
+        .navigationTitle("权限管理")
+        .onAppear {
+            checkPermissions()
+        }
     }
 }
 ```
 
 **验收标准**:
-- [ ] 卡片布局美观
-- [ ] 数据显示完整
-- [ ] 分享功能 UI 就绪
+
+- [ ] 权限状态实时更新
+- [ ] “打开系统设置”正常跳转
+- [ ] 权限描述清晰明确
 
 ---
 
@@ -378,6 +260,7 @@ struct SessionSummaryCard: View {
 ```
 
 **推荐资源**:
+
 - Apple 官方文档：https://developer.apple.com/documentation/scenekit
 - WWDC 2017: Advances in SceneKit
 - Ray Wenderlich SceneKit 教程
@@ -403,6 +286,7 @@ struct SessionSummaryCard: View {
 ```
 
 **推荐资源**:
+
 - Apple 官方文档：https://developer.apple.com/documentation/charts
 - WWDC 2022: Hello Swift Charts
 - Swift Charts 示例代码集
@@ -414,6 +298,7 @@ struct SessionSummaryCard: View {
 ### 性能考虑
 
 1. **3D 渲染性能**
+
    - 目标：60fps
    - 优化策略：
      - 使用低多边形模型
@@ -473,12 +358,14 @@ struct SessionSummaryCard: View {
 ### 调试技巧
 
 1. **3D 场景不显示**
+
    - 检查场景是否创建
    - 检查相机位置
    - 检查光照设置
    - 使用 SceneKit Scene Editor 调试
 
 2. **图表不显示数据**
+
    - 打印数据验证
    - 检查数据格式
    - 确认坐标轴范围
@@ -510,6 +397,7 @@ Progress: ██████░░░░░░░░░░░░ 33%
 **继续保持这个节奏，你很快就能完成整个项目！**
 
 接下来的 Sprint 2 会更有趣，因为：
+
 - 🎨 你将创建炫酷的 3D 可视化
 - 📊 你将实现漂亮的数据图表
 - 🚀 功能将变得更加完整
