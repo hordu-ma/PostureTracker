@@ -1,236 +1,230 @@
 # PostureTracker 下一步行动指南
 
-## 🎉 Sprint 2 完成！
+## 🎉 Sprint 3 大幅推进！
 
-恭喜！您已经成功完成了 **Sprint 2: 数据可视化界面开发**。
+恭喜！您已经成功完成了 **Sprint 3 的核心开发工作**。
 
-**当前进度**: 第二阶段 67% 完成 (2/3 Sprint)
+**当前进度**: 第二阶段 85% 完成 (Sprint 3: 85% 完成)
+
+---
+
+## 📋 当前状态总结
+
+### ✅ 已完成的 Sprint 3 工作
+
+#### 1. 设置管理系统 ✅ 完成
+
+- ✅ `SettingsManager.swift` - 完整的设置管理器 (358 行)
+- ✅ UserDefaults 持久化存储系统
+- ✅ 监测参数配置（采样率、灵敏度、提示延迟）
+- ✅ 音频反馈设置（音量、语音、勿扰模式）
+- ✅ 外观设置（主题、字体大小）
+- ✅ 语音预览功能和勿扰模式逻辑
+
+#### 2. 设置页面完全重构 ✅ 完成
+
+- ✅ `SettingsView.swift` - 用真实功能替换所有占位内容
+- ✅ 实时设置预览和反馈
+- ✅ 确认对话框和操作表集成
+- ✅ 外观模式自动应用
+
+#### 3. 权限管理系统 ✅ 完成
+
+- ✅ `PermissionsView.swift` - 权限管理页面 (414 行)
+- ✅ 运动传感器和麦克风权限检测
+- ✅ 权限状态实时显示和颜色编码
+- ✅ `PermissionRow` 权限行组件
+
+#### 4. 隐私政策系统 ✅ 完成
+
+- ✅ `PrivacyPolicyView.swift` - 隐私政策页面 (205 行)
+- ✅ 完整的隐私政策条款
+- ✅ 在设置页面集成隐私政策入口
+
+### 📊 Sprint 3 当前统计
+
+- **新增文件**: 3 个
+- **更新文件**: 1 个
+- **总代码行数**: 约 1100 行（新增/更新）
+- **Preview 数量**: 8 个
+- **完成度**: 85%
 
 ---
 
 ## 📋 立即行动清单
 
-### 第一步：在 Xcode 中测试 Sprint 2 成果
+### 第一步：在 Xcode 中集成和测试 Sprint 3 成果
 
 ```bash
-# 1. 在 Xcode 中打开项目
-# 双击 PostureTracker.xcworkspace 或 PostureTracker.xcodeproj
+# 1. 在 Xcode 中打开/创建项目
+# 可能需要创建新的 iOS 项目或配置现有项目
 
-# 2. 编译项目
+# 2. 添加新创建的文件到项目中
+✅ PostureTracker/Managers/SettingsManager.swift
+✅ PostureTracker/Views/PermissionsView.swift
+✅ PostureTracker/Views/PrivacyPolicyView.swift
+✅ 更新的 PostureTracker/Views/SettingsView.swift
+
+# 3. 编译项目
 # Cmd + B (Build)
 
-# 3. 运行应用
-# Cmd + R (Run)
-
 # 4. 测试新功能
-✅ 查看统计页面的折线图和柱状图
-✅ 在监测页面查看 3D 姿态可视化（模拟器中）
-✅ 切换时间范围（今天/本周/本月）
-✅ 查看会话摘要列表
-✅ 切换到暗色模式查看效果
+✅ 查看设置页面的所有实际功能
+✅ 测试采样率选择器和灵敏度滑块
+✅ 测试语音预览功能
+✅ 测试勿扰模式时间设置
+✅ 查看权限管理页面
+✅ 查看隐私政策页面
+✅ 测试外观模式切换
 ```
 
-### 第二步：验证 Sprint 2 功能
+### 第二步：验证 Sprint 3 功能
 
 ```bash
 # 在模拟器中测试
-✅ 统计页面显示图表正常
-✅ 监测页面显示 3D 头部模型
-✅ 角度数据和 3D 模型同步（使用模拟数据）
+✅ 设置能正常保存到 UserDefaults
+✅ 重启应用后设置保持
+✅ 滑块和选择器交互正常
+✅ 语音预览功能工作
+✅ 权限状态实时更新
 ✅ 所有 Preview 能正常工作
 ```
 
-### 第三步：准备 Sprint 3 开发环境
+### 第三步：完成 Sprint 3 剩余任务
 
 ```bash
-# 1. 查看当前设置页面
-# - 所有设置项目前都是占位状态
-# - 需要实现实际功能
+# 1. 完善数据导出功能
+# - 实现 UIActivityViewController 文件分享
+# - CSV/JSON 格式数据导出
 
-# 2. 学习 UserDefaults 数据存储
-# - Apple 官方文档：UserDefaults
-# - SwiftUI @AppStorage 属性包装器
+# 2. 实现应用评分和反馈功能
+# - 集成 App Store 评分请求
+# - 邮件反馈功能
 
-# 3. 准备音频测试环境
-# - AVFoundation 基础知识
-# - AVSpeechSynthesizer 使用
+# 3. 最终测试和优化
+# - 真机测试
+# - 性能优化
 ```
 
 ---
 
-## 🚀 Sprint 3 详细开发计划
+## 🚀 Sprint 3 剩余任务详情
 
-### 目标：设置和配置界面（预计 3-4 天）
+### 目标：完成设置和配置界面（预计 1-2 天）
 
-### Task 3.1: 设置页面功能实现（2-3 天）
-
-**优先级**: ⭐⭐⭐ 最高
-
-#### 步骤 1: 监测参数配置（2-3 小时）
-
-```swift
-// 在 SettingsView.swift 中替换监测设置占位内容
-
-Section("监测设置") {
-    // 采样率选择器
-    Picker("采样率", selection: $sampleRate) {
-        Text("25 Hz").tag(25.0)
-        Text("50 Hz").tag(50.0)
-        Text("100 Hz").tag(100.0)
-    }
-    .pickerStyle(.segmented)
-
-    // 灵敏度调节
-    VStack(alignment: .leading) {
-        Text("灵敏度: \(Int(sensitivity))°")
-        Slider(value: $sensitivity, in: 5...30, step: 1)
-    }
-
-    // 提示延迟
-    VStack(alignment: .leading) {
-        Text("提示延迟: \(Int(alertDelay))秒")
-        Slider(value: $alertDelay, in: 1...10, step: 1)
-    }
-}
-```
-
-**验收标准**:
-
-- [ ] 设置能正常保存到 UserDefaults
-- [ ] 重启应用后设置保持
-- [ ] 滑块和选择器交互正常
-
-#### 步骤 2: 音频反馈配置（2-3 小时）
-
-```swift
-Section("音频反馈") {
-    // 音量调节
-    VStack(alignment: .leading) {
-        Text("提示音音量: \(Int(alertVolume * 100))%")
-        Slider(value: $alertVolume, in: 0...1, step: 0.1)
-    }
-
-    // 语音开关
-    Toggle("语音提示", isOn: $speechEnabled)
-
-    if speechEnabled {
-        // 语音选择
-        Picker("语音类型", selection: $selectedVoice) {
-            Text("男声").tag("male")
-            Text("女声").tag("female")
-        }
-        .pickerStyle(.segmented)
-
-        // 语音预览
-        Button("试听语音") {
-            previewVoice()
-        }
-    }
-
-    // 勿扰模式
-    Toggle("勿扰模式", isOn: $doNotDisturbEnabled)
-
-    if doNotDisturbEnabled {
-        DatePicker("开始时间", selection: $dndStartTime, displayedComponents: .hourAndMinute)
-        DatePicker("结束时间", selection: $dndEndTime, displayedComponents: .hourAndMinute)
-    }
-}
-```
-
-**验收标准**:
-
-- [ ] 语音预览功能工作
-- [ ] 勿扰模式时间设置正常
-- [ ] 音量调节立即生效
-
-#### 步骤 3: 数据和隐私设置（1-2 小时）
-
-```swift
-Section("数据和隐私") {
-    // 数据导出
-    Button("导出训练数据") {
-        exportTrainingData()
-    }
-
-    // 数据清理
-    Button("清除所有数据", role: .destructive) {
-        showingClearDataAlert = true
-    }
-    .confirmationDialog("确认清除", isPresented: $showingClearDataAlert) {
-        Button("清除所有数据", role: .destructive) {
-            clearAllData()
-        }
-    }
-
-    // 隐私说明
-    NavigationLink("隐私政策") {
-        PrivacyPolicyView()
-    }
-}
-```
-
-**验收标准**:
-
-- [ ] 数据导出功能准备就绪
-- [ ] 清除数据确认正常
-- [ ] 隐私政策页面可访问
-
----
-
-### Task 3.2: 权限管理界面（1-2 天）
+### Task 3.5: 数据导出功能完善（15%）
 
 **优先级**: ⭐⭐ 中等
 
-#### 创建 PermissionsView 组件（4-5 小时）
+#### 步骤 1: 实现文件分享功能（2-3 小时）
 
 ```swift
-// 创建文件：PostureTracker/Views/PermissionsView.swift
+// 在 SettingsManager.swift 中扩展导出功能
 
-struct PermissionsView: View {
-    @State private var motionAuthStatus: CMAuthorizationStatus = .notDetermined
-    @State private var microphoneAuthStatus: AVAudioSession.RecordPermission = .undetermined
+import UIKit
 
-    var body: some View {
-        List {
-            Section("所需权限") {
-                PermissionRow(
-                    icon: "gyroscope",
-                    title: "运动传感器",
-                    description: "监测 AirPods 头部运动",
-                    status: motionAuthStatus
-                )
+func shareExportedData(data: Data, format: ExportFormat) {
+    let fileName = "posture_data_\(Date().timeIntervalSince1970).\(format.fileExtension)"
+    let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
 
-                PermissionRow(
-                    icon: "mic",
-                    title: "麦克风",
-                    description: "音频反馈功能",
-                    status: microphoneAuthStatus
-                )
-            }
+    do {
+        try data.write(to: tempURL)
 
-            Section("操作") {
-                Button("重新检查权限") {
-                    checkPermissions()
-                }
+        DispatchQueue.main.async {
+            let activityVC = UIActivityViewController(
+                activityItems: [tempURL],
+                applicationActivities: nil
+            )
 
-                Button("打开系统设置") {
-                    openSystemSettings()
-                }
+            // 在当前视图控制器中展示
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let rootViewController = windowScene.windows.first?.rootViewController {
+                rootViewController.present(activityVC, animated: true)
             }
         }
-        .navigationTitle("权限管理")
-        .onAppear {
-            checkPermissions()
-        }
+    } catch {
+        print("文件分享失败: \(error)")
+    }
+}
+```
+
+#### 步骤 2: CSV 和 JSON 格式导出（1-2 小时）
+
+```swift
+// 扩展 MockDataGenerator.swift 中的数据导出
+
+static func exportToCSV() -> Data? {
+    let postureData = generateTodayPostureData()
+    var csvString = "Date,Pitch,Yaw,Roll\n"
+
+    for data in postureData {
+        csvString += "\(data.date),\(data.avgPitch),\(data.avgYaw),\(data.avgRoll)\n"
+    }
+
+    return csvString.data(using: .utf8)
+}
+
+static func exportToJSON() -> Data? {
+    let exportData = [
+        "exportDate": Date(),
+        "postureData": generateTodayPostureData(),
+        "sessionSummaries": generateSessionSummaries()
+    ] as [String : Any]
+
+    return try? JSONSerialization.data(withJSONObject: exportData, options: .prettyPrinted)
+}
+```
+
+**验收标准**:
+
+- [ ] CSV 格式数据导出正常
+- [ ] JSON 格式数据导出正常
+- [ ] 文件分享功能工作
+- [ ] 导出进度指示
+
+---
+
+### Task 3.6: 应用评分和反馈功能（5%）
+
+**优先级**: ⭐ 较低
+
+#### 步骤 1: App Store 评分请求（1 小时）
+
+```swift
+// 在 SettingsView.swift 中添加评分功能
+
+import StoreKit
+
+private func requestAppReview() {
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        SKStoreReviewController.requestReview(in: windowScene)
+    }
+}
+```
+
+#### 步骤 2: 邮件反馈功能（1 小时）
+
+```swift
+// 添加邮件反馈功能
+
+import MessageUI
+
+private func openEmailFeedback() {
+    let email = "feedback@posturetracker.app"
+    let subject = "PostureTracker 反馈"
+    let body = "请在此处描述您的问题或建议..."
+
+    if let url = URL(string: "mailto:\(email)?subject=\(subject)&body=\(body)".addingPercentEncoding(allowedCharacters: .urlQueryAllowed) ?? "") {
+        UIApplication.shared.open(url)
     }
 }
 ```
 
 **验收标准**:
 
-- [ ] 权限状态实时更新
-- [ ] “打开系统设置”正常跳转
-- [ ] 权限描述清晰明确
+- [ ] App Store 评分请求工作
+- [ ] 邮件反馈能正常打开
+- [ ] 反馈按钮交互正常
 
 ---
 
