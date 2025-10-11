@@ -1,108 +1,67 @@
-# PostureTracker - 基于 AirPods 的姿态追踪应用# PostureTracker - 基于 AirPods 的姿态追踪应用
+# PostureTracker - 基于 AirPods 的姿态追踪应用
 
-> 🎯 **当前状态**: Sprint 4 已完成 ✅ | **进度**: 开发完成 100% | **下一步**: Xcode 配置和 App Store 提交> 🎯 **当前状态**: Sprint 1 已完成 ✅ | **进度**: 第二阶段 33% (1/3) | **最后更新**: 2024-09-30
+> 🎯 **当前状态**: Sprint 4 已完成 ✅ | **进度**: 开发完成 100% | **下一步**: Xcode 配置和 App Store 提交
 
-## 📱 项目概述## 📱 项目概述
+## 📱 项目概述
 
-PostureTracker 是一个创新的 iOS 应用，利用 AirPods 内置的陀螺仪和加速度计传感器，实时监测用户头部姿态，并通过智能音频反馈系统帮助用户改善坐姿习惯。PostureTracker 是一个创新的 iOS 应用，利用 AirPods 内置的陀螺仪和加速度计传感器，实时监测用户头部姿态，并通过智能音频反馈系统帮助用户改善姿势。
+PostureTracker 是一个创新的 iOS 应用,利用 AirPods 内置的陀螺仪和加速度计传感器,实时监测用户头部姿态,并通过智能音频反馈系统帮助用户改善坐姿习惯。
 
-### 核心功能### 核心功能
+### 核心功能
 
-- 🎯 **实时姿态监测**：通过 AirPods 传感器实时采集头部运动数据- 🎯 **实时姿态监测**：通过 AirPods 传感器实时采集头部运动数据
+- 🎯 **实时姿态监测**：通过 AirPods 传感器实时采集头部运动数据
+- 🔊 **智能音频反馈**：根据姿态偏差提供语音指导和提示音
+- 📊 **数据分析可视化**：3D 姿态展示和统计分析图表
+- 💾 **本地数据持久化**：会话数据自动保存到 UserDefaults
+- 🎮 **个性化设置**：可调节灵敏度、音频反馈、主题等
 
-- 🔊 **智能音频反馈**：根据姿态偏差提供语音指导和提示音- 🔊 **智能音频反馈**：根据姿态偏差提供语音指导和提示音
+### 项目亮点
 
-- 📊 **数据分析可视化**：3D 姿态展示和统计分析图表- 📊 **数据分析可视化**：3D 姿态展示和统计分析图表
+- ✅ **完整的 MVVM 架构**：清晰的代码组织,易于维护和扩展
+- ✅ **高测试覆盖率**：83 个单元测试,覆盖率 >80%
+- ✅ **现代化 UI**：SwiftUI + Combine 响应式编程
+- ✅ **隐私优先**：所有数据本地处理,不上传服务器
+- ✅ **轻量高效**：低电量消耗,不影响 AirPods 续航
 
-- 💾 **本地数据持久化**：会话数据自动保存到 UserDefaults- ☁️ **云端同步**：训练数据自动备份到 Firebase
+## 🛠 技术栈
 
-- 🎮 **个性化设置**：可调节灵敏度、音频反馈、主题等- 🎮 **个性化设置**：可调节反馈频率、音量和阈值
-
-### 项目亮点## 🛠 技术栈
-
-- ✅ **完整的 MVVM 架构**：清晰的代码组织，易于维护和扩展- **开发语言**: Swift 5.9+
-
-- ✅ **高测试覆盖率**：83 个单元测试，覆盖率 >80%- **UI 框架**: SwiftUI
-
-- ✅ **现代化 UI**：SwiftUI + Combine 响应式编程- **架构模式**: MVVM + Combine
-
-- ✅ **隐私优先**：所有数据本地处理，不上传服务器- **传感器框架**: SensorKit / CMHeadphoneMotionManager
-
-- ✅ **轻量高效**：低电量消耗，不影响 AirPods 续航- **音频框架**: AVFoundation
-
-- **云服务**: Firebase (Firestore + Storage)
-
-## 🛠 技术栈- **依赖管理**: CocoaPods / Swift Package Manager
-
-- **开发语言**: Swift 5.9+## 🚀 快速开始
-
+- **开发语言**: Swift 5.9+
 - **UI 框架**: SwiftUI
-
-- **架构模式**: MVVM + Combine### 🎬 立即开始
-
+- **架构模式**: MVVM + Combine
 - **传感器框架**: CMHeadphoneMotionManager
-
-- **3D 渲染**: SceneKit**推荐阅读顺序**:
-
+- **3D 渲染**: SceneKit
 - **图表**: Swift Charts
+- **音频框架**: AVFoundation (AVSpeechSynthesizer)
+- **测试框架**: XCTest
+- **依赖管理**: CocoaPods / Swift Package Manager
+- **版本控制**: Git + GitHub
 
-- **音频框架**: AVFoundation (AVSpeechSynthesizer)1. 📖 [NEXT_STEPS.md](NEXT_STEPS.md) - **下一步行动指南**（强烈推荐！）
-
-- **测试框架**: XCTest2. 📊 [PROJECT_STATUS.md](PROJECT_STATUS.md) - 项目状态概览
-
-- **版本控制**: Git + GitHub3. 🏃 [Docs/SPRINT1_QUICKSTART.md](Docs/SPRINT1_QUICKSTART.md) - 快速开始指南
-
-## 📊 代码统计### 环境要求
-
-```- macOS 13.0+ (Ventura)
-
-源代码:         7,706 行 (24 个 Swift 文件)- Xcode 15.0+
-
-测试代码:       1,867 行 (4 个测试文件)- iOS 14.0+ (设备)
-
-测试用例:       83 个- AirPods Pro 或 AirPods (3rd generation) - 真机测试用
-
-测试覆盖率:     >80%- Apple Developer 账号
-
-文档:           >10,000 行
-
-Bundle ID:      com.posturetracker.app### 三步快速启动
-
-版本:           1.0 (Build 1)
-
-目标平台:       iOS 14.0+1. **创建 Xcode 项目**（如果尚未创建）
+## 📊 代码统计
 
 ```
+源代码:         7,706 行 (24 个 Swift 文件)
+测试代码:       1,867 行 (4 个测试文件)
+测试用例:       83 个
+测试覆盖率:     >80%
+文档:           >10,000 行
+版本:           1.0 (Build 1)
+目标平台:       iOS 14.0+
+```
 
-    ```bash
+## 🚀 快速开始
 
-## 🚀 快速开始 # 在 Xcode 中: File > New > Project > iOS > App
+### � 立即开始
 
-    # 然后添加现有代码文件到项目
+**推荐阅读顺序**:
 
-### 🎯 新手？从这里开始！ ```
+1. 📖 [下一步行动指南](Docs/planning/NEXT_STEPS.md) - **下一步行动指南**（强烈推荐！）
+2. � [项目状态概览](Docs/planning/PROJECT_STATUS.md) - 项目状态和完成情况
+3. 🏃 [快速开始指南](Docs/guides/QUICK_START_GUIDE.md) - 快速开始指南
 
-**如果您不熟悉 Xcode**（强烈推荐阅读）:2. **配置权限** - 在 `Info.plist` 添加：
+4. 📊 [PROJECT_STATUS.md](PROJECT_STATUS.md) - 项目状态和代码统计 ```bash
 
-1. 📖 **[QUICK_START_GUIDE.md](QUICK_START_GUIDE.md)** - ⭐ 快速导航和行动清单（先看这个！） ```xml
+5. 🏗️ [Docs/ARCHITECTURE.md](Docs/ARCHITECTURE.md) - 架构设计文档 # 在 Xcode 中按 Cmd + R
 
-2. 🔧 **[XCODE_COMPLETE_GUIDE.md](XCODE_COMPLETE_GUIDE.md)** - Xcode 完整操作指南（新手友好，带截图说明） <key>NSMotionUsageDescription</key>
-
-3. 📱 **[APP_STORE_SUBMISSION_GUIDE.md](APP_STORE_SUBMISSION_GUIDE.md)** - App Store 提交完整流程（从零到上架） <string>需要访问运动数据来监测头部姿态</string>
-
-   ```
-
-   ```
-
-**如果您已熟悉 iOS 开发**:
-
-3. **构建运行**
-
-1. 📊 [PROJECT_STATUS.md](PROJECT_STATUS.md) - 项目状态和代码统计 ```bash
-
-1. 🏗️ [Docs/ARCHITECTURE.md](Docs/ARCHITECTURE.md) - 架构设计文档 # 在 Xcode 中按 Cmd + R
-
-1. 📋 [RELEASE_READINESS_REPORT.md](RELEASE_READINESS_REPORT.md) - 发布就绪评估（70% ready） # 或使用命令行
+6. 📋 [RELEASE_READINESS_REPORT.md](RELEASE_READINESS_REPORT.md) - 发布就绪评估（70% ready） # 或使用命令行
 
    make build && make run
 
@@ -120,221 +79,183 @@ Bundle ID:      com.posturetracker.app### 三步快速启动
 
 PostureTracker 2/
 
-**可选**:├── PostureTracker/
+**如果您不熟悉 Xcode**（强烈推荐阅读）:
 
-- Apple Developer 账号（发布到 App Store 需要，$99/年）│ ├── App/ # 应用入口 ✅
+1. 📖 **[快速开始指南](Docs/guides/QUICK_START_GUIDE.md)** - ⭐ 快速导航和行动清单（先看这个！）
+2. 🔧 **[Xcode 完整指南](Docs/guides/XCODE_COMPLETE_GUIDE.md)** - Xcode 完整操作指南（新手友好,带截图说明）
+3. 📱 **[App Store 提交指南](Docs/guides/APP_STORE_SUBMISSION_GUIDE.md)** - App Store 提交完整流程（从零到上架）
 
-│ │ └── PostureTrackerApp.swift # 应用入口和生命周期管理
+**如果您已熟悉 iOS 开发**:
 
-### 快速启动（3 步）│ ├── Models/ # 数据模型层 ✅
+1. 📊 [项目状态](Docs/planning/PROJECT_STATUS.md) - 项目状态和代码统计
+2. 🏗️ [架构设计](Docs/technical/ARCHITECTURE.md) - 架构设计文档
+3. 📋 [发布就绪报告](Docs/planning/RELEASE_READINESS_REPORT.md) - 发布就绪评估（70% ready）
 
-│ │ ├── Posture.swift # 姿态数据模型
+### 环境要求
 
-#### 1. 打开项目 │ │ ├── MotionData.swift # 运动数据模型
+**必需**:
 
-│ │ └── Session.swift # 会话管理模型
+- macOS 13.0+ (Ventura)
+- Xcode 15.0+
+- iOS 14.0+ 设备（真机测试）
+- AirPods Pro 或 AirPods (3rd generation)
 
-````bash│ ├── ViewModels/                  # 视图模型层 ⏳ (Sprint 3-4)
+**可选**:
 
-cd "/Users/liguoma/my-devs/swift/PostureTracker 2"│   ├── Views/                       # SwiftUI 视图层 ✅
+- Apple Developer 账号（发布到 App Store 需要,$99/年）
 
-open PostureTracker.xcodeproj│   │   ├── ContentView.swift        # 主导航（TabView）
+### 快速启动（3 步）
 
-```│   │   ├── MonitoringView.swift    # 监测页面（核心功能）
+#### 1. 打开项目
 
-│   │   ├── StatisticsView.swift    # 统计页面（占位）
+```bash
+cd "/Users/liguoma/my-devs/swift/PostureTracker 2"
+open PostureTracker.xcodeproj
+```
 
-#### 2. 配置权限（详见 XCODE_COMPLETE_GUIDE.md）│   │   ├── SettingsView.swift      # 设置页面（占位）
+#### 2. 配置权限（详见 [Xcode 完整指南](Docs/guides/XCODE_COMPLETE_GUIDE.md)）
 
-│   │   └── Components/              # 可重用组件 ✅
+在 `Info.plist` 中添加：
 
-在 `Info.plist` 中添加：│   │       ├── StatusCard.swift         # 状态卡片
+```xml
+<key>NSMotionUsageDescription</key>
+<string>PostureTracker 需要访问运动数据来监测您的头部姿态,帮助改善坐姿</string>
 
-│   │       ├── ConnectionIndicator.swift # 连接指示器
+<key>NSMicrophoneUsageDescription</key>
+<string>PostureTracker 需要访问麦克风以提供语音反馈功能</string>
+```
 
-```xml│   │       └── ActionButton.swift       # 操作按钮
+#### 3. 编译和运行
 
-<key>NSMotionUsageDescription</key>│   ├── Services/                    # 业务服务层 ✅
+```bash
+# 在 Xcode 中:
+# - 选择目标设备（推荐：iPhone 15 Pro 模拟器或真机）
+# - 按 Cmd + B 编译
+# - 按 Cmd + R 运行
+# - 按 Cmd + U 运行所有测试
+```
 
-<string>PostureTracker 需要访问运动数据来监测您的头部姿态，帮助改善坐姿</string>│   │   ├── AirPodsMotionManager.swift   # 传感器管理
+> ⚠️ **重要**: AirPods 功能只能在真机上测试,模拟器无法模拟运动传感器！
 
-│   │   └── AudioFeedbackManager.swift   # 音频反馈
+## 📂 项目结构
 
-<key>NSMicrophoneUsageDescription</key>│   ├── Utils/                       # 工具类和扩展
-
-<string>PostureTracker 需要访问麦克风以提供语音反馈功能</string>│   ├── Resources/                   # 资源文件
-
-```│   └── Configuration/               # 配置文件
-
-├── PostureTrackerTests/             # 测试
-
-#### 3. 编译和运行├── Docs/                            # 项目文档 ✅
-
-│   ├── SPRINT_TRACKER.md            # Sprint 进度跟踪
-
-```bash│   ├── SPRINT1_QUICKSTART.md        # 快速开始指南
-
-# 在 Xcode 中:│   ├── SPRINT1_SUMMARY.md           # Sprint 1 总结
-
-# - 选择目标设备（推荐：iPhone 15 Pro 模拟器或真机）│   └── PROJECT_SETUP_CHECKLIST.md   # 配置检查清单
-
-# - 按 Cmd + B 编译├── README.md                        # 本文档
-
-# - 按 Cmd + R 运行├── NEXT_STEPS.md                    # 下一步行动指南 ⭐
-
-# - 按 Cmd + U 运行所有测试├── PROJECT_STATUS.md                # 项目状态概览
-
-```├── DEVELOPMENT_GUIDE.md             # 完整开发指南
-
-└── Makefile                         # 自动化构建
-
-> ⚠️ **重要**: AirPods 功能只能在真机上测试，模拟器无法模拟运动传感器！
-
-图例: ✅ 已完成  ⏳ 进行中  空白 = 待开发
-
-## 📂 项目结构```
-
-
-
-```### 🎯 Sprint 1 已完成（2024-09-30）
-
+```
 PostureTracker 2/
+├── PostureTracker/
+│   ├── App/                      # 应用入口 ✅
+│   │   └── PostureTrackerApp.swift
+│   ├── Models/                   # 数据模型层 ✅
+│   │   ├── Posture.swift
+│   │   ├── MotionData.swift
+│   │   └── Session.swift
+│   ├── ViewModels/               # 视图模型层 ✅
+│   │   ├── MotionViewModel.swift
+│   │   ├── SessionViewModel.swift
+│   │   └── StatisticsViewModel.swift
+│   ├── Views/                    # SwiftUI 视图层 ✅
+│   │   ├── ContentView.swift
+│   │   ├── MonitoringView.swift
+│   │   ├── StatisticsView.swift
+│   │   ├── SettingsView.swift
+│   │   └── Components/           # 可重用组件 ✅
+│   ├── Services/                 # 业务服务层 ✅
+│   │   ├── AirPodsMotionManager.swift
+│   │   └── AudioFeedbackManager.swift
+│   ├── Utils/                    # 工具类和扩展
+│   ├── Resources/                # 资源文件
+│   └── Configuration/            # 配置文件
+├── PostureTrackerTests/          # 测试
+├── Docs/                         # 项目文档 📚
+│   ├── guides/                   # 开发指南
+│   ├── sprints/                  # Sprint 文档
+│   ├── planning/                 # 项目规划
+│   ├── technical/                # 技术文档
+│   └── setup/                    # 配置文档
+├── README.md                     # 本文档
+└── Makefile                      # 自动化构建
+
+图例: ✅ 已完成
+```
+
+## 🎯 开发进度
+
+### Sprint 4 已完成（2025-10-03）
+
+- ✅ **3 个 ViewModel 文件** - MotionViewModel, SessionViewModel, StatisticsViewModel (~1,200 行)
+- ✅ **View 层集成** - MonitoringView, StatisticsView 完全重构 (~600 行)
+- ✅ **58 个单元测试** - 测试覆盖率 >80% (~600 行)
+- ✅ **MVVM 架构完整实现** - 业务逻辑与 UI 完全分离
+
+## 🧪 测试
+
+### 当前测试状态
+
+- ✅ 单元测试 - 83 个测试用例,覆盖率 >80%
+- ⏳ UI 测试 - 待实现
+- ✅ 手动测试 - 可在模拟器测试 UI 交互
+
+### 运行测试
+
+```bash
+make test        # 单元测试
+make ui-test     # UI 测试
+make coverage    # 覆盖率报告
+
+```
+
+### 当前可测试项
+
+- ✅ UI 界面和导航
+- ✅ 按钮交互和动画
+- ✅ 暗色模式适配
+- ❌ AirPods 连接（需真机）
+- ❌ 传感器数据（需真机 + AirPods）
+
+## 📝 开发指南
+
+完整的开发指南请参阅:
+
+- [开发指南](Docs/guides/DEVELOPMENT_GUIDE.md) - 详细的开发规范和最佳实践
+- [架构设计](Docs/technical/ARCHITECTURE.md) - MVVM 架构详细说明
+- [项目配置](Docs/setup/PROJECT_SETUP_CHECKLIST.md) - Xcode 配置检查清单
+
+### 编码规范
+
+- 遵循 Swift API Design Guidelines
+- 使用 SwiftLint 进行代码检查
+- 所有注释使用中文
+- 保持单一职责原则
+
+### Git 工作流
+
+```bash
+# 创建功能分支
+git checkout -b feature/your-feature
+
+# 提交代码
+git add .
+git commit -m "feat: 添加新功能描述"
+
+# 推送到远程
+git push origin feature/your-feature
+```
+
+### 提交规范
+
+- `feat`: 新功能
+- `fix`: 修复 Bug
+- `docs`: 文档更新
+- `style`: 代码格式调整
+- `refactor`: 代码重构
+- `test`: 测试相关
+- `chore`: 构建或辅助工具变动
 
-│- ✅ **8 个视图文件** - 完整 UI 框架
+## 🔑 权限说明
 
-├── 📱 PostureTracker/                    主应用代码- ✅ **3 个可复用组件** - StatusCard, ConnectionIndicator, ActionButton
+本应用需要以下权限：
 
-│   ├── App/                              应用入口 ✅- ✅ **1,830 行代码** - 注释覆盖率 24%
-
-│   │   └── PostureTrackerApp.swift- ✅ **22 个 Preview** - 完整预览支持
-
-│   │- ✅ **6 个文档文件** - 约 2,716 行文档
-
-│   ├── Models/                           数据模型 ✅
-
-│   │   ├── Posture.swift                 姿态数据模型## 🧪 测试
-
-│   │   ├── MotionData.swift              运动数据模型
-
-│   │   └── Session.swift                 会话管理模型### 当前测试状态
-
-│   │
-
-│   ├── ViewModels/                       业务逻辑 ✅ (Sprint 4)- ⏳ 单元测试 - Sprint 3-4 实现（目标覆盖率 > 80%）
-
-│   │   ├── MotionViewModel.swift         实时监测逻辑 (~400 行)- ⏳ UI 测试 - Sprint 6 实现
-
-│   │   ├── SessionViewModel.swift        会话管理逻辑 (~400 行)- ✅ 手动测试 - 可在模拟器测试 UI 交互
-
-│   │   └── StatisticsViewModel.swift     统计分析逻辑 (~400 行)
-
-│   │### 运行测试（未来）
-
-│   ├── Views/                            用户界面 ✅
-
-│   │   ├── ContentView.swift             主导航（TabView）```bash
-
-│   │   ├── MonitoringView.swift          监测页面（核心功能）make test        # 单元测试
-
-│   │   ├── StatisticsView.swift          统计页面（图表+历史）make ui-test     # UI 测试
-
-│   │   ├── SettingsView.swift            设置页面（完整实现）make coverage    # 覆盖率报告
-
-│   │   ├── PermissionsView.swift         权限请求页面```
-
-│   │   ├── PrivacyPolicyView.swift       隐私政策页面
-
-│   │   └── Components/                   可重用组件 ✅### 当前可测试项
-
-│   │       ├── StatusCard.swift
-
-│   │       ├── ConnectionIndicator.swift- ✅ UI 界面和导航
-
-│   │       ├── ActionButton.swift- ✅ 按钮交互和动画
-
-│   │       ├── PostureVisualization3D.swift  (3D 姿态模型)- ✅ 暗色模式适配
-
-│   │       └── SessionSummaryCard.swift- ❌ AirPods 连接（需真机）
-
-│   │- ❌ 传感器数据（需真机 + AirPods）
-
-│   ├── Services/                         核心服务 ✅
-
-│   │   ├── AirPodsMotionManager.swift    传感器管理## 📝 开发指南
-
-│   │   └── AudioFeedbackManager.swift    音频反馈
-
-│   │### 编码规范
-
-│   ├── Managers/                         管理器 ✅
-
-│   │   └── SettingsManager.swift         设置管理（UserDefaults）- 遵循 Swift API Design Guidelines
-
-│   │- 使用 SwiftLint 进行代码检查
-
-│   ├── Utils/                            工具类 ✅- 所有注释使用中文
-
-│   │   ├── FileExportManager.swift       数据导出（CSV/JSON）- 保持单一职责原则
-
-│   │   ├── MockDataGenerator.swift       测试数据生成
-
-│   │   └── Extensions/                   Swift 扩展### Git 工作流
-
-│   │
-
-│   └── Resources/                        资源文件```bash
-
-│       └── Assets.xcassets/              图片资源和应用图标# 创建功能分支
-
-│git checkout -b feature/your-feature
-
-├── 🧪 PostureTrackerTests/               单元测试 ✅
-
-│   ├── SettingsManagerTests.swift        (25 tests)# 提交代码
-
-│   ├── MotionViewModelTests.swift        (18 tests)git add .
-
-│   ├── SessionViewModelTests.swift       (20 tests)git commit -m "feat: 添加新功能描述"
-
-│   └── StatisticsViewModelTests.swift    (20 tests)
-
-│# 推送到远程
-
-├── 📚 Docs/                              技术文档git push origin feature/your-feature
-
-│   ├── SPRINT_TRACKER.md                 Sprint 1-4 进度```
-
-│   ├── SPRINT1_SUMMARY.md                Sprint 1 详细总结
-
-│   ├── ARCHITECTURE.md                   架构设计文档### 提交规范
-
-│   └── PROJECT_SETUP_CHECKLIST.md        项目设置清单
-
-│- `feat`: 新功能
-
-├── 🚀 发布准备文档 (NEW!)- `fix`: 修复 Bug
-
-│   ├── QUICK_START_GUIDE.md              ⭐ 快速导航（新手必读）- `docs`: 文档更新
-
-│   ├── XCODE_COMPLETE_GUIDE.md           ⭐ Xcode 操作指南- `style`: 代码格式调整
-
-│   ├── APP_STORE_SUBMISSION_GUIDE.md     ⭐ App Store 提交流程- `refactor`: 代码重构
-
-│   └── RELEASE_READINESS_REPORT.md       发布就绪评估- `test`: 测试相关
-
-│- `chore`: 构建或辅助工具变动
-
-├── 📋 项目管理文档
-
-│   ├── README.md                         本文件## 🔑 权限说明
-
-│   ├── PROJECT_STATUS.md                 项目状态概览
-
-│   ├── NEXT_STEPS.md                     下一步计划本应用需要以下权限：
-
-│   └── DEVELOPMENT_GUIDE.md              开发指南
-
-│- **SensorKit**: 访问 AirPods 传感器数据（需特殊批准）
+- **Motion**: 访问 AirPods 运动传感器数据
+- **Microphone** (可选): 播放语音反馈
 
 └── ⚙️ 配置文件- **音频**: 播放语音反馈
 
@@ -356,7 +277,7 @@ PostureTracker 2/
 
 - ⏳ **备选方案**: `SensorKit`（需 Apple 批准，周期 3-5 个月，仅研究用途）
 
-````
+```
 
 ┌─────────────────────────────────────────────────────────┐### 设备兼容性
 
@@ -478,25 +399,63 @@ PostureTracker 2/
 
 | [NEXT_STEPS.md](NEXT_STEPS.md) | 后续开发计划 |第一阶段: ████████████████████ 100% ✅ 基础架构
 
-第二阶段: ██████░░░░░░░░░░░░░░  33% ⏳ 视图层
 
-## ✅ 开发进度  ├─ Sprint 1: ████████████████████ 100% ✅ 核心界面框架
+## 📚 文档导航
 
-  ├─ Sprint 2: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 数据可视化
+完整的文档索引请查看：[Docs/README.md](Docs/README.md)
 
-### Sprint 1: 核心 UI 框架 (✅ 100%)  └─ Sprint 3: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 设置配置
+### 🌟 推荐优先阅读
 
-- [x] 应用入口和生命周期第三阶段: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ ViewModel 层
+1. **[下一步行动](Docs/planning/NEXT_STEPS.md)** - 下一步开发计划
+2. **[项目状态](Docs/planning/PROJECT_STATUS.md)** - 项目状态概览
+3. **[快速开始](Docs/guides/QUICK_START_GUIDE.md)** - 快速导航和行动清单
 
-- [x] 基础 TabView 导航第四阶段: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 数据处理优化
+### 📖 开发文档
 
-- [x] MonitoringView 核心界面第五阶段: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 云端集成
+- [开发指南](Docs/guides/DEVELOPMENT_GUIDE.md) - 完整开发指南和最佳实践
+- [架构设计](Docs/technical/ARCHITECTURE.md) - MVVM 架构详细说明
+- [项目配置](Docs/setup/PROJECT_SETUP_CHECKLIST.md) - Xcode 配置检查清单
 
-- [x] 可重用 UI 组件第六阶段: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 测试和优化
+### 🚀 发布准备文档
 
-- [x] AirPods 传感器集成第七阶段: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 发布准备
+- [快速开始指南](Docs/guides/QUICK_START_GUIDE.md) - ⭐ 新手必读
+- [Xcode 完整指南](Docs/guides/XCODE_COMPLETE_GUIDE.md) - Xcode 操作详解
+- [App Store 提交指南](Docs/guides/APP_STORE_SUBMISSION_GUIDE.md) - 提交流程
+- [发布就绪报告](Docs/planning/RELEASE_READINESS_REPORT.md) - 发布前检查
 
-- [x] 音频反馈系统```
+### 📋 Sprint 文档
+
+- [Sprint 进度跟踪](Docs/sprints/SPRINT_TRACKER.md) - 所有 Sprint 进度
+- [Sprint 1 总结](Docs/sprints/SPRINT1_SUMMARY.md) - Sprint 1 详情
+- [Sprint 3 总结](Docs/sprints/SPRINT3_COMPLETION_SUMMARY.md) - Sprint 3 详情
+
+## 🎉 开始使用
+
+**如果您是第一次接触这个项目：**
+
+1. 📖 阅读 [快速开始指南](Docs/guides/QUICK_START_GUIDE.md)（5 分钟）
+2. 🔧 按照 [Xcode 完整指南](Docs/guides/XCODE_COMPLETE_GUIDE.md) 配置 Xcode（1-2 小时）
+3. 📱 按照 [App Store 提交指南](Docs/guides/APP_STORE_SUBMISSION_GUIDE.md) 提交应用（2-3 小时）
+
+**预计时间线：3-4 天即可完成发布准备！**
+
+---
+
+## 📮 联系方式
+
+- **GitHub**: [PostureTracker Repository](https://github.com/hordu-ma/PostureTracker)
+- **问题反馈**: [Issues](https://github.com/hordu-ma/PostureTracker/issues)
+- **文档中心**: [Docs/](Docs/)
+
+## 📄 许可证
+
+Copyright © 2025. All rights reserved.
+
+---
+
+**🎯 项目当前状态**: 开发完成 100%,发布准备 70%
+**🚀 下一个里程碑**: 提交到 App Store
+**最后更新**: 2025-10-11```
 
 
 
