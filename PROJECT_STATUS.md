@@ -113,4 +113,32 @@ git push
 
 ---
 
-**🎉 Sprint 3 进行中！即将完成设置功能！**
+## 📖 相关文档
+
+### 技术文档
+
+- **ARCHITECTURE.md**: 完整的架构设计文档
+- **DEVELOPMENT_GUIDE.md**: 开发指南和最佳实践
+- **WARP.md**: AI 协作开发记录
+
+### 项目管理
+
+- **SPRINT_TRACKER.md**: Sprint 进度追踪（Sprint 1-4）
+- **SPRINT1_SUMMARY.md**: Sprint 1 详细总结
+- **NEXT_STEPS.md**: 后续开发计划
+- **NON_XCODE_TASKS.md**: 非 Xcode 任务清单
+
+### 设置文档
+
+- **PROJECT_SETUP_CHECKLIST.md**: 项目设置检查清单
+- **SPRINT1_QUICKSTART.md**: 快速开始指南
+
+### 发布文档 ⭐ NEW
+
+- **RELEASE_READINESS_REPORT.md**: 项目发布就绪评估报告
+- **XCODE_COMPLETE_GUIDE.md**: Xcode 完整操作指南（新手友好）
+- **APP_STORE_SUBMISSION_GUIDE.md**: App Store 提交完整流程
+
+---
+
+**🎉 Sprint 4 已完成！项目进入发布准备阶段！**
