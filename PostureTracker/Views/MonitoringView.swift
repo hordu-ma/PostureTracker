@@ -4,29 +4,31 @@
 //
 //  主监测页面 - 实时姿态监测和控制
 //  Created on 2024-09-30
+//  Updated: 2024-10-03 - 集成 ViewModel 层
 //
 
 import SwiftUI
 
 struct MonitoringView: View {
 
-    // MARK: - 属性
+    // MARK: - ViewModels
 
-    /// AirPods 运动管理器
-    @ObservedObject private var motionManager = AirPodsMotionManager.shared
+    /// 姿态监测 ViewModel
+    @StateObject private var motionViewModel = MotionViewModel()
+    
+    /// 会话管理 ViewModel
+    @StateObject private var sessionViewModel = SessionViewModel()
+
+    // MARK: - 状态属性
 
     /// 是否显示校准视图
     @State private var showingCalibration = false
 
     /// 是否显示设置
     @State private var showingSettings = false
-
-    /// 当前会话统计
-    @State private var sessionDuration: TimeInterval = 0
-    @State private var deviationCount: Int = 0
-
-    /// 计时器
-    @State private var timer: Timer?
+    
+    /// 是否显示会话保存确认
+    @State private var showingSaveConfirmation = false
 
     // MARK: - Body
 
@@ -44,7 +46,7 @@ struct MonitoringView: View {
                     controlButtons
 
                     // 会话统计
-                    if motionManager.isTracking {
+                    if motionViewModel.isMonitoring {
                         sessionStatisticsCard
                     }
 
@@ -69,12 +71,17 @@ struct MonitoringView: View {
             .sheet(isPresented: $showingCalibration) {
                 CalibrationView()
             }
+            .alert("保存会话", isPresented: $showingSaveConfirmation) {
+                Button("保存", role: .destructive) {
+                    saveCurrentSession()
+                }
+                Button("取消", role: .cancel) { }
+            } message: {
+                Text("是否保存本次训练会话？")
+            }
         }
         .onAppear {
             checkDeviceAvailability()
-        }
-        .onDisappear {
-            stopTimer()
         }
     }
 
@@ -84,8 +91,8 @@ struct MonitoringView: View {
     private var connectionStatusCard: some View {
         StatusCard(
             title: "AirPods 状态",
-            isConnected: motionManager.isConnected,
-            isTracking: motionManager.isTracking
+            isConnected: motionViewModel.isConnected,
+            isTracking: motionViewModel.isMonitoring
         )
     }
 
@@ -96,12 +103,12 @@ struct MonitoringView: View {
                 .font(.headline)
                 .foregroundColor(.secondary)
 
-            if motionManager.isTracking {
+            if motionViewModel.isMonitoring {
                 // 3D 姿态可视化
                 PostureVisualization3D(
-                    pitch: motionManager.currentPosture.pitch,
-                    yaw: motionManager.currentPosture.yaw,
-                    roll: motionManager.currentPosture.roll,
+                    pitch: motionViewModel.currentPosture.pitch,
+                    yaw: motionViewModel.currentPosture.yaw,
+                    roll: motionViewModel.currentPosture.roll,
                     showAxes: true,
                     headColor: deviationColor
                 )
@@ -113,25 +120,28 @@ struct MonitoringView: View {
                 HStack(spacing: 32) {
                     postureAngleView(
                         label: "俯仰",
-                        angle: motionManager.currentPosture.pitch,
+                        angle: motionViewModel.currentPosture.pitch,
                         iconName: "arrow.up.and.down"
                     )
 
                     postureAngleView(
                         label: "偏航",
-                        angle: motionManager.currentPosture.yaw,
+                        angle: motionViewModel.currentPosture.yaw,
                         iconName: "arrow.left.and.right"
                     )
 
                     postureAngleView(
                         label: "翻滚",
-                        angle: motionManager.currentPosture.roll,
+                        angle: motionViewModel.currentPosture.roll,
                         iconName: "arrow.clockwise"
                     )
                 }
 
                 // 偏差指示器
                 deviationIndicator
+                
+                // 姿态评分
+                postureScoreView
 
             } else {
                 // 未监测状态
@@ -172,37 +182,90 @@ struct MonitoringView: View {
 
     /// 偏差指示器
     private var deviationIndicator: some View {
-        let deviation = motionManager.currentPosture.deviation(from: motionManager.targetPosture)
-        let isNormal = !deviation.exceedsThreshold(15.0)
-
-        return HStack(spacing: 12) {
+        HStack(spacing: 12) {
             Circle()
-                .fill(isNormal ? Color.green : Color.orange)
+                .fill(motionViewModel.isDeviating ? Color.orange : Color.green)
                 .frame(width: 12, height: 12)
 
-            Text(isNormal ? "姿态正常" : "姿态偏差")
+            Text(motionViewModel.isDeviating ? "姿态偏差" : "姿态正常")
                 .font(.subheadline)
-                .foregroundColor(isNormal ? .green : .orange)
+                .foregroundColor(motionViewModel.isDeviating ? .orange : .green)
 
             Spacer()
 
-            Text(String(format: "偏差: %.1f°", deviation.magnitude))
+            Text(String(format: "偏差: %.1f°", motionViewModel.deviationAngle))
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
         .padding(.horizontal)
         .padding(.vertical, 12)
         .background(
-            (isNormal ? Color.green : Color.orange)
+            (motionViewModel.isDeviating ? Color.orange : Color.green)
                 .opacity(0.1)
         )
         .cornerRadius(8)
     }
     
+    /// 姿态评分视图
+    private var postureScoreView: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("姿态评分")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                
+                Text(String(format: "%.0f", motionViewModel.postureScore))
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(scoreColor)
+            }
+            
+            Spacer()
+            
+            // 评分等级指示
+            Text(scoreGrade)
+                .font(.subheadline)
+                .fontWeight(.medium)
+                .foregroundColor(scoreColor)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(scoreColor.opacity(0.15))
+                .cornerRadius(8)
+        }
+        .padding()
+        .background(Color(.systemGray6))
+        .cornerRadius(12)
+    }
+    
+    /// 评分颜色
+    private var scoreColor: Color {
+        if motionViewModel.postureScore >= 90 {
+            return .green
+        } else if motionViewModel.postureScore >= 70 {
+            return .blue
+        } else if motionViewModel.postureScore >= 50 {
+            return .orange
+        } else {
+            return .red
+        }
+    }
+    
+    /// 评分等级
+    private var scoreGrade: String {
+        if motionViewModel.postureScore >= 90 {
+            return "优秀"
+        } else if motionViewModel.postureScore >= 70 {
+            return "良好"
+        } else if motionViewModel.postureScore >= 50 {
+            return "一般"
+        } else {
+            return "较差"
+        }
+    }
+    
     /// 根据偏差计算头部颜色
     private var deviationColor: UIColor {
-        let deviation = motionManager.currentPosture.deviation(from: motionManager.targetPosture)
-        let magnitude = deviation.magnitude
+        let magnitude = motionViewModel.deviationAngle
         
         if magnitude <= 5.0 {
             return .systemGreen // 姿态很好
@@ -220,33 +283,24 @@ struct MonitoringView: View {
         VStack(spacing: 16) {
             // 主控制按钮
             ActionButton(
-                title: motionManager.isTracking ? "停止监测" : "开始监测",
-                icon: motionManager.isTracking ? "stop.circle.fill" : "play.circle.fill",
-                isEnabled: motionManager.isConnected,
+                title: motionViewModel.isMonitoring ? "停止监测" : "开始监测",
+                icon: motionViewModel.isMonitoring ? "stop.circle.fill" : "play.circle.fill",
+                isEnabled: motionViewModel.isConnected,
                 isPrimary: true
             ) {
                 toggleTracking()
             }
 
             // 辅助按钮
-            if motionManager.isTracking {
+            if motionViewModel.isMonitoring {
                 HStack(spacing: 12) {
                     ActionButton(
-                        title: "暂停",
-                        icon: "pause.circle",
+                        title: "校准目标姿态",
+                        icon: "target",
                         isEnabled: true,
                         isPrimary: false
                     ) {
-                        pauseTracking()
-                    }
-
-                    ActionButton(
-                        title: "重置",
-                        icon: "arrow.counterclockwise",
-                        isEnabled: true,
-                        isPrimary: false
-                    ) {
-                        resetSession()
+                        calibrateTargetPosture()
                     }
                 }
             }
@@ -263,20 +317,20 @@ struct MonitoringView: View {
             HStack(spacing: 32) {
                 statisticView(
                     label: "时长",
-                    value: formatDuration(sessionDuration),
+                    value: formatDuration(sessionViewModel.currentSession?.duration ?? 0),
                     iconName: "clock"
                 )
 
                 statisticView(
                     label: "偏差次数",
-                    value: "\(deviationCount)",
+                    value: "\(sessionViewModel.currentSession?.deviationCount ?? 0)",
                     iconName: "exclamationmark.triangle"
                 )
 
                 statisticView(
-                    label: "采样率",
-                    value: String(format: "%.0f Hz", motionManager.sampleRate),
-                    iconName: "waveform"
+                    label: "当前评分",
+                    value: String(format: "%.0f", motionViewModel.postureScore),
+                    iconName: "star.fill"
                 )
             }
         }
@@ -340,7 +394,7 @@ struct MonitoringView: View {
 
     /// 切换监测状态
     private func toggleTracking() {
-        if motionManager.isTracking {
+        if motionViewModel.isMonitoring {
             stopTracking()
         } else {
             startTracking()
@@ -349,18 +403,17 @@ struct MonitoringView: View {
 
     /// 开始监测
     private func startTracking() {
-        guard motionManager.isConnected else {
+        guard motionViewModel.isConnected else {
             // TODO: 显示错误提示
             print("❌ AirPods 未连接")
             return
         }
 
-        motionManager.startTracking()
-        startTimer()
-
-        // 重置统计
-        sessionDuration = 0
-        deviationCount = 0
+        // 启动姿态监测
+        motionViewModel.startMonitoring()
+        
+        // 启动新会话
+        sessionViewModel.startSession()
 
         // 触觉反馈
         let generator = UIImpactFeedbackGenerator(style: .medium)
@@ -369,25 +422,40 @@ struct MonitoringView: View {
 
     /// 停止监测
     private func stopTracking() {
-        motionManager.stopTracking()
-        stopTimer()
+        // 停止姿态监测
+        motionViewModel.stopMonitoring()
+        
+        // 结束会话并提示保存
+        sessionViewModel.endSession(
+            averageScore: motionViewModel.postureScore,
+            deviationCount: motionViewModel.deviationCount
+        )
+        
+        // 显示保存确认
+        if sessionViewModel.currentSession != nil {
+            showingSaveConfirmation = true
+        }
 
         // 触觉反馈
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
     }
-
-    /// 暂停监测
-    private func pauseTracking() {
-        motionManager.pauseTracking()
-        stopTimer()
+    
+    /// 校准目标姿态
+    private func calibrateTargetPosture() {
+        motionViewModel.setTargetPosture(motionViewModel.currentPosture)
+        
+        // 触觉反馈
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+        
+        print("✅ 目标姿态已校准")
     }
-
-    /// 重置会话
-    private func resetSession() {
-        sessionDuration = 0
-        deviationCount = 0
-
+    
+    /// 保存当前会话
+    private func saveCurrentSession() {
+        sessionViewModel.saveSession()
+        
         // 触觉反馈
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)
@@ -397,19 +465,6 @@ struct MonitoringView: View {
     private func checkDeviceAvailability() {
         // 这里可以添加设备检测逻辑
         print("📱 检查 AirPods 连接状态")
-    }
-
-    /// 启动计时器
-    private func startTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            sessionDuration += 1
-        }
-    }
-
-    /// 停止计时器
-    private func stopTimer() {
-        timer?.invalidate()
-        timer = nil
     }
 
     /// 格式化时长
