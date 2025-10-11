@@ -122,6 +122,8 @@ class FileExportManager: ObservableObject {
     @Published var isExporting = false
     @Published var exportProgress: Double = 0.0
     @Published var lastExportError: String?
+    @Published var exportSuccess = false
+    @Published var lastExportedFileName: String?
     
     private init() {}
     
@@ -134,6 +136,7 @@ class FileExportManager: ObservableObject {
         isExporting = true
         exportProgress = 0.0
         lastExportError = nil
+        exportSuccess = false
         
         defer {
             isExporting = false
@@ -164,14 +167,22 @@ class FileExportManager: ObservableObject {
             )
             
             // 根据格式导出
+            let data: Data
             switch format {
             case .json:
-                return try exportToJSON(exportData)
+                data = try exportToJSON(exportData)
             case .csv:
-                return exportToCSV(exportData)
+                guard let csvData = exportToCSV(exportData) else {
+                    throw ExportError.csvGenerationFailed
+                }
+                data = csvData
             }
+            
+            exportSuccess = true
+            return data
         } catch {
             lastExportError = "导出失败：\(error.localizedDescription)"
+            exportSuccess = false
             return nil
         }
     }
@@ -248,12 +259,14 @@ class FileExportManager: ObservableObject {
         
         do {
             try data.write(to: tempURL)
+            lastExportedFileName = fileName
             
             DispatchQueue.main.async {
                 self.presentActivityViewController(for: tempURL, sourceView: sourceView)
             }
         } catch {
             lastExportError = "文件保存失败：\(error.localizedDescription)"
+            exportSuccess = false
         }
     }
     
@@ -338,6 +351,26 @@ class FileExportManager: ObservableObject {
             }
         } catch {
             print("清理临时文件失败：\(error)")
+        }
+    }
+}
+
+// MARK: - 导出错误
+
+/// 导出错误类型
+enum ExportError: LocalizedError {
+    case csvGenerationFailed
+    case noDataAvailable
+    case fileWriteFailed
+    
+    var errorDescription: String? {
+        switch self {
+        case .csvGenerationFailed:
+            return "CSV 格式生成失败"
+        case .noDataAvailable:
+            return "没有可导出的数据"
+        case .fileWriteFailed:
+            return "文件写入失败"
         }
     }
 }

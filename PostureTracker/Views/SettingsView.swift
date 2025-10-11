@@ -417,6 +417,35 @@ struct SettingsView: View {
                         .background(Color.black.opacity(0.3))
                     }
                     
+                    if exportManager.exportSuccess {
+                        VStack(spacing: 12) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.green)
+                                .font(.system(size: 50))
+                            
+                            Text("导出成功")
+                                .font(.headline)
+                            
+                            if let fileName = exportManager.lastExportedFileName {
+                                Text(fileName)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.center)
+                            }
+                            
+                            Button("完成") {
+                                exportManager.exportSuccess = false
+                            }
+                            .buttonStyle(.borderedProminent)
+                        }
+                        .padding()
+                        .background(Color(.systemBackground))
+                        .cornerRadius(12)
+                        .shadow(radius: 8)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.black.opacity(0.3))
+                    }
+                    
                     if let error = exportManager.lastExportError {
                         VStack(spacing: 12) {
                             Image(systemName: "exclamationmark.triangle.fill")
@@ -463,10 +492,7 @@ struct SettingsView: View {
         }
     }
     
-    /// 数据导出格式
-    enum ExportFormat {
-        case json, csv
-    }
+    // MARK: - 私有方法
     
     /// 导出数据
     private func exportData(format: ExportFormat) {
